@@ -7,11 +7,13 @@ export default function QuoteCard() {
   const { current, status } = useSelector((state) => state.quotes || {});
 
   useEffect(() => {
-    dispatch(fetchQuote());
-  }, [dispatch]);
+    if (!current) {
+      dispatch(fetchQuote());
+    }
+  }, [current, dispatch]);
 
   if (status === "loading") return <p>Loading...</p>;
-  if (status === "failed") return <p>Failed to load quote </p>;
+  if (status === "failed") return <p>Failed to load quote</p>;
 
   return (
     <div className="p-6 text-center">
